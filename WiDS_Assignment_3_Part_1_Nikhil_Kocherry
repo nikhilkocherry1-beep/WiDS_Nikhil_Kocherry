@@ -1,0 +1,28 @@
+import pandas as pd
+import numpy as np
+from textblob import TextBlob
+df = pd.read_csv('IMDB Dataset.csv').drop("sentiment", axis = 1)
+a = b = c = 0
+df['sentiment'] = 10
+for i in range(0,len(df)):
+    f = TextBlob(df.at[i,'review']).polarity
+    k = ''
+    if f>0:
+        k = 'positive'
+        a+=1
+    elif f<0:
+        k = 'negative'
+        b+=1
+    else:
+        k = 'neutral'
+        c+=1
+    df.at[i,'sentiment'] = k
+ap = (a/len(df)) * 100
+bp = (b/len(df)) * 100
+cp = (c/len(df)) * 100
+print(df.tail(10))
+print()
+print("Percent positive reviews:" , ap , "\b%")
+print("Percent negative reviews:" , bp , "\b%")
+print("Percent neutral reviews:" , cp , "\b%")
+
